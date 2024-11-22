@@ -1,0 +1,130 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1 style="text-align: center;">{{titleTraining}}</h1>
+      <div style="text-align: center;">CRUD operation</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>first name</mat-label>
+        <input  [(ngModel)]="entry.firstName" matInput  >
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>middle name</mat-label>
+        <input  [(ngModel)]="entry.middleName" matInput  >
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>last name</mat-label>
+        <input  [(ngModel)]="entry.lastName" matInput  >
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>ext name</mat-label>
+        <input  [(ngModel)]="entry.extName" matInput  >
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>sex</mat-label>
+        <input  [(ngModel)]="entry.sex" matInput  >
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field>
+        <mat-label>Choose a date</mat-label>
+        <input [(ngModel)]="entry.birthDate" matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      @if (isLoading) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      }
+    </div>
+    <div class="col-auto">
+      @if (!isLoading) {
+        @if (isUpdate) {
+          <button (click)="update_employee()" mat-mini-fab matTooltip="update" [matTooltipPosition]="'above'"
+          >
+            <mat-icon>add_task</mat-icon>
+          </button>
+        }
+        @else {
+          <button (click)="save_employee()" mat-mini-fab matTooltip="add" [matTooltipPosition]="'above'">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        }
+      }
+
+
+    </div>
+  </div>
+</div>
+<div class="container  mt-4">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h1>Employee list ({{employee_list.length}})</h1>
+        </div>
+        <div class="card-body">
+
+
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>last name</th>
+                <th>first name</th>
+                <th>middle name</th>
+                <th>ext</th>
+                <th>sex</th>
+                <th>dob</th>
+                <th>action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of employee_list;let e = index">
+                  <td></td>
+                  <td>{{i.lastName}}</td>
+                  <td>{{i.firstName}}</td>
+                  <td>{{i.middleName}}</td>
+                  <td>{{i.extName}}</td>
+                  <td>{{i.sex}}</td>
+                  <td>{{i.birthDate|date:'MMMM dd, yyyy'}}</td>
+                  <td>
+                    @if (!i.isloading) {
+                      <button (click)="entry = i;isUpdate=true" mat-mini-fab  >
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      &nbsp;
+                      <button (click)="remove_employee(i,e)" mat-mini-fab class="text-danger">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    }
+                    @else {
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    }
+
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
